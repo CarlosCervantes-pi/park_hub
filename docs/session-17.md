@@ -10,6 +10,6 @@ ParkHub demonstrates how a browser uses `fetch()` to exchange JSON with an Expre
 6. **POST `/api/reservations`:** Form → `fetch()` → reservation route → service validation and overlap check → models → MongoDB → `201` → success message. Repeating the same period returns `409` and a useful message.
 7. **HTTP codes:** `200` for reads and cancellation, `201` for creation, `400` for bad input or period, `404` for a missing spot or reservation, `409` for an unavailable spot, and `500` for unexpected failures.
 8. **UI states:** The spot list shows Loading, cards on Success, an Empty message, or an Error message. Reservation submission shows Success, Conflict, or a generic Error.
-9. **Future Jest examples:** `validateReservationPeriod()`, `hasTimeConflict()`, and `canReserveSpot()` are small exported rules. Test valid and invalid periods, touching boundaries, overlaps, inactive spots, and cancelled reservations later.
+9. **Session 19 Jest examples:** `validateReservationPeriod()`, `hasTimeConflict()`, and `canReserveSpot()` are small exported rules. Their unit tests cover valid and invalid periods, touching boundaries, overlaps, and inactive spots. See [the Jest lesson](session-19-jest.md) for the scope of cancelled reservations.
 
 For the class demo, seed the database, open the page, create a reservation that includes the current time, try the same period again, and cancel the first reservation. Refresh the spots to see current availability.

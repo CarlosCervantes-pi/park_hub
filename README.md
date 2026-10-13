@@ -17,6 +17,10 @@ Node.js, Express, TypeScript, MongoDB, Mongoose, and vanilla HTML, CSS, and Java
 
 For a compiled run, use `npm run build` followed by `npm start`. Run commands from the project root so Express can serve `src/public`.
 
+## Testing
+
+Run the Session 19 unit tests with `npm test`. Use `npm run test:watch` while editing tests.
+
 ## Environment
 
 | Variable | Default | Purpose |
@@ -38,7 +42,7 @@ src/
   seed.ts            # Five sample parking spots
 ```
 
-Routes handle HTTP, services contain business rules and call models, and models define MongoDB documents. `reservation.rules.ts` contains small pure functions for a later Jest lesson.
+Routes handle HTTP, services contain business rules and call models, and models define MongoDB documents. `reservation.rules.ts` contains the pure functions tested in [Session 19](docs/session-19-jest.md).
 
 ## API
 
