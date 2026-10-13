@@ -7,36 +7,18 @@ import { describe, expect, test } from "@jest/globals";
 
 describe("validateReservationPeriod", () => {
   test("returns the dates when the start is before the end", () => {
-    // Arrange
-    const startTime = "2026-10-13T10:00:00.000Z";
-    const endTime = "2026-10-13T11:00:00.000Z";
-
-    // Act
-    const period = validateReservationPeriod(startTime, endTime);
-
-    // Assert
-    expect(period).toEqual({
-      start: new Date(startTime),
-      end: new Date(endTime),
-    });
+    // TODO S19 PROF 1:
+    // Implement this test using Arrange, Act, Assert.
   });
 
   test("returns null when the start is after the end", () => {
-    const period = validateReservationPeriod(
-      "2026-10-13T11:00:00.000Z",
-      "2026-10-13T10:00:00.000Z",
-    );
-
-    expect(period).toBeNull();
+    // TODO S19 STUDENT 1:
+    // Implement this error case using Arrange, Act, Assert.
   });
 
   test("returns null when the start equals the end", () => {
-    const period = validateReservationPeriod(
-      "2026-10-13T10:00:00.000Z",
-      "2026-10-13T10:00:00.000Z",
-    );
-
-    expect(period).toBeNull();
+    // TODO S19 STUDENT 2:
+    // Implement this boundary case using Arrange, Act, Assert.
   });
 
   test("accepts another valid period", () => {
@@ -52,12 +34,8 @@ describe("validateReservationPeriod", () => {
   });
 
   test("returns null for an invalid date string", () => {
-    const period = validateReservationPeriod(
-      "not a date",
-      "2026-10-13T11:00:00.000Z",
-    );
-
-    expect(period).toBeNull();
+    // TODO S19 STUDENT 3:
+    // Verify how the rule behaves with invalid date input.
   });
 
   test("returns null when an input is not a string", () => {
@@ -72,59 +50,23 @@ describe("hasTimeConflict", () => {
   const existingEnd = new Date("2026-10-13T11:00:00.000Z");
 
   test("reports a conflict for the exact same period", () => {
-    const newStart = new Date("2026-10-13T10:00:00.000Z");
-    const newEnd = new Date("2026-10-13T11:00:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(true);
+    // TODO S19 PROF 2:
+    // Implement this test using Arrange, Act, Assert.
   });
 
   test("reports a conflict when the new period starts inside the existing period", () => {
-    const newStart = new Date("2026-10-13T10:30:00.000Z");
-    const newEnd = new Date("2026-10-13T11:30:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(true);
+    // TODO S19 STUDENT 4:
+    // Verify that an overlapping reservation is detected.
   });
 
   test("reports a conflict when the new period ends inside the existing period", () => {
-    const newStart = new Date("2026-10-13T09:30:00.000Z");
-    const newEnd = new Date("2026-10-13T10:30:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(true);
+    // TODO S19 STUDENT 5:
+    // Verify the overlap from the opposite side.
   });
 
   test("reports a conflict when the new period is completely inside the existing period", () => {
-    const newStart = new Date("2026-10-13T10:15:00.000Z");
-    const newEnd = new Date("2026-10-13T10:45:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(true);
+    // TODO S19 STUDENT 6:
+    // Verify that a reservation fully inside another one conflicts.
   });
 
   test("reports a conflict when the new period contains the existing period", () => {
@@ -142,45 +84,18 @@ describe("hasTimeConflict", () => {
   });
 
   test("allows a period ending exactly when the existing period starts", () => {
-    const newStart = new Date("2026-10-13T09:00:00.000Z");
-    const newEnd = new Date("2026-10-13T10:00:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(false);
+    // TODO S19 PROF 3:
+    // Implement this test using Arrange, Act, Assert.
   });
 
   test("allows a period starting exactly when the existing period ends", () => {
-    const newStart = new Date("2026-10-13T11:00:00.000Z");
-    const newEnd = new Date("2026-10-13T12:00:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(false);
+    // TODO S19 STUDENT 7:
+    // Verify this boundary condition.
   });
 
   test("allows a period completely before the existing period", () => {
-    const newStart = new Date("2026-10-13T08:00:00.000Z");
-    const newEnd = new Date("2026-10-13T09:00:00.000Z");
-
-    const conflict = hasTimeConflict(
-      newStart,
-      newEnd,
-      existingStart,
-      existingEnd,
-    );
-
-    expect(conflict).toBe(false);
+    // TODO S19 STUDENT 8:
+    // Verify a non-overlapping reservation before the existing one.
   });
 
   test("allows a period completely after the existing period", () => {
@@ -200,21 +115,18 @@ describe("hasTimeConflict", () => {
 
 describe("canReserveSpot", () => {
   test("allows an active spot with no conflict", () => {
-    const allowed = canReserveSpot(true, false);
-
-    expect(allowed).toBe(true);
+    // TODO S19 PROF 4:
+    // Implement this test using Arrange, Act, Assert.
   });
 
   test("rejects an inactive spot even without a conflict", () => {
-    const allowed = canReserveSpot(false, false);
-
-    expect(allowed).toBe(false);
+    // TODO S19 STUDENT 9:
+    // Verify that an inactive spot cannot be reserved.
   });
 
   test("rejects an active spot when there is a conflict", () => {
-    const allowed = canReserveSpot(true, true);
-
-    expect(allowed).toBe(false);
+    // TODO S19 STUDENT 10:
+    // Verify that a time conflict prevents reservation.
   });
 
   test("rejects an inactive spot when there is also a conflict", () => {

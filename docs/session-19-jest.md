@@ -11,11 +11,11 @@
 `describe(...)` agrupa pruebas por función, `test(...)` nombra un caso y `expect(...)` realiza la comprobación. Aquí usamos `toBe(...)` para booleanos o `null`, y `toEqual(...)` para comparar el contenido de un período con fechas.
 
 ```ts
-test('allows an active spot with no conflict', () => {
-  const active = true; // Arrange
-  const hasConflict = false;
-  const allowed = canReserveSpot(active, hasConflict); // Act
-  expect(allowed).toBe(true); // Assert
+test('returns null when an input is not a string', () => {
+  const startTime = null; // Arrange
+  const endTime = '2026-10-13T11:00:00.000Z';
+  const period = validateReservationPeriod(startTime, endTime); // Act
+  expect(period).toBeNull(); // Assert
 });
 ```
 
@@ -24,7 +24,7 @@ test('allows an active spot with no conflict', () => {
 - `npm test`: ejecutar una vez todas las pruebas.
 - `npm run test:watch`: repetirlas al guardar cambios.
 
-La suite `src/features/reservations/__tests__/reservation.rules.test.ts` cubre:
+Los escenarios de `src/features/reservations/__tests__/reservation.rules.test.ts` incluyen:
 
 - `validateReservationPeriod`: períodos válidos (**happy path**), fechas iguales (**edge case**), orden inverso y entradas inválidas (**error cases**).
 - `hasTimeConflict`: solapamientos (**happy path** para detectar conflictos), períodos adyacentes (**edge cases**) y períodos separados sin conflicto.
@@ -34,16 +34,25 @@ El servicio valida el período antes de llamar a `canReserveSpot(active, hasConf
 
 El servicio también consulta únicamente reservaciones con `status: 'ACTIVE'` antes de llamar a `hasTimeConflict`. Las canceladas quedan fuera de esa consulta; ninguna de las reglas puras recibe el estado de una reservación. Comprobar ese filtro requeriría una prueba del servicio con acceso a datos o mocks, fuera del alcance unitario de esta sesión.
 
+## Student version
+
+La configuración de Jest, los nombres de las pruebas y cinco ejemplos completos ya están preparados. En los bloques marcados, completar **Arrange, Act, Assert** sin cambiar las reglas de producción.
+
+- **Live coding del profesor:** TODO S19 PROF 1 a 4 (período válido, conflicto exacto, límite entre períodos y espacio activo sin conflicto).
+- **Actividad de estudiantes:** TODO S19 STUDENT 1 a 10 (períodos inválidos, solapamientos, límites y disponibilidad del espacio).
+
+Jest puede mostrar un bloque TODO con cuerpo vacío como aprobado aunque todavía no contenga ninguna aserción. Durante la actividad, revisar también que cada bloque tenga un `expect(...)` significativo.
+
 ## Mostrar PASS y FAIL en clase
 
 Una prueba que pasa puede mostrar:
 
 ```text
 PASS  reservation.rules.test.ts
-✓ allows an active spot with no conflict
+✓ accepts another valid period
 ```
 
-Para mostrar un fallo, el profesor puede cambiar temporalmente `expect(allowed).toBe(false)` por `expect(allowed).toBe(true)` en la prueba del espacio inactivo y ejecutar `npm test`:
+Para mostrar un fallo, el profesor puede cambiar temporalmente `expect(allowed).toBe(false)` por `expect(allowed).toBe(true)` en el ejemplo completo del espacio inactivo con conflicto y ejecutar `npm test`:
 
 ```text
 Expected: true
