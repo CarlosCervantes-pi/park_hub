@@ -4,11 +4,51 @@ import {
   validateReservationPeriod,
 } from "../reservation.rules";
 import { describe, expect, test } from "@jest/globals";
+import { hello } from "../reservation.service";
+
+describe("hello", () => {
+  test("deberia retornar Hello World cuando los argumentos sean 'World'", () => {
+    // Prepare
+    const expectedValue = "Hello World";
+    // Execute
+    const result = hello("World");
+    // validate
+    expect(result).toBe(expectedValue);
+  });
+  test("deberia retornar Hello cuando los argumentos sean vacio", () => {
+    // Prepare
+    const expectedValue = "Hello ";
+    // Execute
+    const result = hello("");
+    // validate
+    expect(result).toBe(expectedValue);
+  });
+  test("deberia retornar mensaje de error cuando los argumentos sean 1", () => {
+    // Prepare
+    const expectedValue = "Solo acepta cadenas de texto";
+    // Execute
+    const result = hello(1);
+    // validate
+    expect(result).toBe(expectedValue);
+  });
+});
 
 describe("validateReservationPeriod", () => {
   test("returns the dates when the start is before the end", () => {
     // TODO S19 PROF 1:
     // Implement this test using Arrange, Act, Assert.
+
+    // Preparar datos
+    const startTime = "2026-10-14T14:15:00.000Z";
+    const endTime = "2026-10-14T16:45:00.000Z";
+
+    // Ejecutar la función
+    const period = validateReservationPeriod(startTime, endTime);
+    // Validar resultados
+    expect(period).toEqual({
+      start: new Date(startTime),
+      end: new Date(endTime),
+    });
   });
 
   test("returns null when the start is after the end", () => {
@@ -52,6 +92,20 @@ describe("hasTimeConflict", () => {
   test("reports a conflict for the exact same period", () => {
     // TODO S19 PROF 2:
     // Implement this test using Arrange, Act, Assert.
+    // Preparar datos
+    const newStart = new Date("2026-10-13T10:00:00.000Z");
+    const newEnd = new Date("2026-10-13T11:00:00.000Z");
+
+    // Ejecutar la función
+    const conflict = hasTimeConflict(
+      newStart,
+      newEnd,
+      existingStart,
+      existingEnd,
+    );
+
+    // Validar resultados
+    expect(conflict).toBe(true);
   });
 
   test("reports a conflict when the new period starts inside the existing period", () => {
@@ -86,6 +140,18 @@ describe("hasTimeConflict", () => {
   test("allows a period ending exactly when the existing period starts", () => {
     // TODO S19 PROF 3:
     // Implement this test using Arrange, Act, Assert.
+    // Preparar datos
+    const newStart = new Date("2026-10-13T09:00:00.000Z");
+    const newEnd = new Date("2026-10-13T10:00:00.000Z");
+    // Ejecutar la función
+    const conflict = hasTimeConflict(
+      newStart,
+      newEnd,
+      existingStart,
+      existingEnd,
+    );
+    // Validar resultados
+    expect(conflict).toBe(false);
   });
 
   test("allows a period starting exactly when the existing period ends", () => {
